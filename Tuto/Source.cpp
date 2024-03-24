@@ -12,6 +12,8 @@ double reset();
 void Calculator();
 void TemperatureConvert();
 void VitessteCovert();
+void VitesseCalcul();
+void NonbreaDeviner();
 
 
 int main() {
@@ -29,7 +31,8 @@ int main() {
 		std::cout << "7. Calculatrice\n";
 		std::cout << "8. Conversion de temperature\n";
 		std::cout << "9. Conversion de vitesse\n";
-		cout << "10. quitter\n";
+		std::cout << "10 Calcul de vitesse\n";
+		cout << "11. quitter\n";
 
 		// user inputs
 		std::cin >> choise;
@@ -72,7 +75,11 @@ int main() {
 			// Affiche un texte et quitte le logiciel
 		case 9: VitessteCovert();
 			break;
-		case 10: std::cout << "Au revoir";
+		case 10: VitesseCalcul();
+			break;
+		case 11: NonbreaDeviner();
+			break;
+		case 12: std::cout << "Au revoir";
 			// Fais un temp de pose
 			Sleep(500);
 			break;
@@ -81,7 +88,7 @@ int main() {
 
 		}
 		//Si ce n'est pas egal a 8 on continu
-	} while (choise != 10);
+	} while (choise != 12);
 
 }
 
@@ -89,6 +96,7 @@ int main() {
 // Affiche le resultat
 void ShowResult(double result) {
 	std::cout << "Le resultat est " << std::setprecision(2) << std::fixed << result << '\n';
+	
 
 }
 //Met le nombre des addition dans une variable
@@ -156,25 +164,30 @@ void Calculator() {
 		case '+':
 			// Addition
 			result = num1 + num2;
+			cout << '\n';
 			std::cout << "Le resultat est " << result << '\n';
 			break;
 		case '-':
 			// Soustraction
 			result = num1 - num2;
+			cout << '\n';
 			std::cout << "Le resultat est " << result << '\n';
 			break;
 			// multiplication
 		case '*':
 			result = num1 * num2;
+			cout << '\n';
 			std::cout << "Le resultat est " << result << '\n';
 			break;
 			// Division
 		case '/':
 			result = num1 / num2;
+			cout << '\n';
 			std::cout << "Le resultat est " << result << '\n';
 			break;
 			// Retour au menu
 		case 'e': case 'E': std::cout << "Au revoir";
+			cout << '\n';
 			break;
 
 		}
@@ -284,6 +297,109 @@ void VitessteCovert()
 	} while (unit != 'E' && unit != 'e');
 
 
+}
+
+void VitesseCalcul()
+{
+	double vitesse;
+	double temp;
+	double distance;
+	char choise;
+
+	do
+	{
+		cout << "Calcul de vitesse\n";
+		cout << "V. Vitesse\n";
+		cout << "t. temp\n";
+		cout << "d. distance\n";
+		cout << "e. retour au menu\n";
+		cout << "Quelle est votre choix: ";
+		cin >> choise;
+
+		if (choise == 'v' || choise == 'V')
+		{
+			cout << "Quelle est la distance: (en km) ";
+			cin >> distance;
+			cout << "En combien de temp (en heure): ";
+			cin >> temp;
+			vitesse = distance / temp;
+			cout << '\n';
+			cout << "La vitesse moyenne est " << vitesse << " km/h\n";
+			cout << '\n';
+		}
+
+		else if (choise == 't' || choise == 'T')
+		{
+			cout << "Quelle est votre vitesse (en km/h): ";
+			cin >> vitesse;
+			cout << "Quelle est la distance (en km): ";
+			cin >> distance;
+
+			temp = distance / vitesse;
+			cout << '\n';
+			cout << "Le temp = " << temp << " h\n";
+			cout << '\n';
+		}
+
+		else if (choise == 'd' || choise == 'D')
+		{
+			cout << "Quelle est votre vitesse (en km/h): ";
+			cin >> vitesse;
+			cout << "Quelle est votre temp (en heure): ";
+			cin >> temp;
+
+			distance = vitesse * temp;
+			cout << '\n';
+			cout << "La distance est = " << distance << " km\n";
+			cout << '\n';
+		}
+		else if (choise == 'e' || choise == 'E')
+		{
+			cout << "Retour au menu\n";
+			cout << '\n';
+		}
+		else
+		{
+			cout << "Error\n";
+			cout << '\n';
+		}
+
+	} while (choise != 'e' && choise != 'E');
+}
+
+void NonbreaDeviner()
+{
+	srand(time(0));
+
+	// Génération d'un nombre aléatoire entre 1 et 100
+	int nombreADeviner = rand() % 100 + 1;
+
+	int tentative;
+	int essais = 0;
+	bool trouve = false;
+
+	cout << "Bienvenue dans le jeu de devinette !\n";
+	cout << "Devinez le nombre entre 1 et 100.\n";
+
+	do {
+		cout << "Entrez votre proposition : ";
+		cin >> tentative;
+		essais++;
+
+		if (tentative < nombreADeviner) {
+			cout << "Le nombre mystere est plus grand !\n";
+		}
+		else if (tentative > nombreADeviner) {
+			cout << "Le nombre mystere est plus petit !\n";
+		}
+		else {
+			trouve = true;
+		}
+	} while (!trouve);
+
+	cout << "Bravo ! Vous avez devine le nombre mystere en " << essais << " essais.\n";
+
+	
 }
 
 // Le prochain tuto sera d'améliorer le code et d'ajouter de nouveaux contenue, on va commencer maintenant par ajouter la fonction
