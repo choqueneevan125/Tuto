@@ -1,6 +1,10 @@
 #include <iostream>
 #include <iomanip>
 #include <windows.h>
+#include <string>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 // Les signature = 8 fonction
 void ShowResult(double result);
@@ -14,6 +18,7 @@ void TemperatureConvert();
 void VitessteCovert();
 void VitesseCalcul();
 void NonbreaDeviner();
+void Pendu();
 
 
 int main() {
@@ -32,7 +37,9 @@ int main() {
 		std::cout << "8. Conversion de temperature\n";
 		std::cout << "9. Conversion de vitesse\n";
 		std::cout << "10 Calcul de vitesse\n";
-		cout << "11. quitter\n";
+		std::cout << "11. Nombre a deviner\n";
+		std::cout << "12. Jeu de pendu\n";
+		cout << "13. quitter\n";
 
 		// user inputs
 		std::cin >> choise;
@@ -79,7 +86,9 @@ int main() {
 			break;
 		case 11: NonbreaDeviner();
 			break;
-		case 12: std::cout << "Au revoir";
+		case 12: Pendu();
+			break;
+		case 13: std::cout << "Au revoir";
 			// Fais un temp de pose
 			Sleep(500);
 			break;
@@ -88,7 +97,7 @@ int main() {
 
 		}
 		//Si ce n'est pas egal a 8 on continu
-	} while (choise != 12);
+	} while (choise != 13);
 
 }
 
@@ -401,6 +410,59 @@ void NonbreaDeviner()
 
 	
 }
+
+void Pendu()
+{
+	// Liste de mots à deviner
+	vector<string> mots = { "informatique", "programmation", "developpement", "algorithmes", "ordinateur" };
+
+	// Choix aléatoire d'un mot à deviner
+	srand(time(0));
+	string motADeviner = mots[rand() % mots.size()];
+
+	// Création d'une chaîne de tirets pour chaque lettre du mot à deviner
+	string motCache(motADeviner.size(), '_');
+
+	int essais = 0;
+	const int maxEssais = 6; // Maximum d'essais autorisés
+
+	cout << "Bienvenue dans le jeu du Pendu !\n";
+	cout << "Devinez le mot : " << motCache << endl;
+
+	// Boucle jusqu'à ce que le joueur ait deviné le mot ou jusqu'à épuisement des essais
+	while (essais < maxEssais && motCache != motADeviner) {
+		char lettre;
+		cout << "Entrez une lettre : ";
+		cin >> lettre;
+
+		// Vérifie si la lettre devinée est présente dans le mot à deviner
+		bool lettreTrouvee = false;
+		for (size_t i = 0; i < motADeviner.size(); ++i) {
+			if (motADeviner[i] == lettre) {
+				motCache[i] = lettre;
+				lettreTrouvee = true;
+			}
+		}
+
+		// Affiche le mot partiellement découvert
+		cout << "Mot : " << motCache << endl;
+
+		// Si la lettre n'est pas trouvée, incrémentez le compteur d'essais
+		if (!lettreTrouvee) {
+			essais++;
+			cout << "Incorrect ! Essais restants : " << maxEssais - essais << endl;
+		}
+	}
+
+	// Vérifie si le joueur a gagné ou perdu
+	if (motCache == motADeviner) {
+		cout << "Felicitations ! Vous avez devine le mot : " << motADeviner << endl;
+	}
+	else {
+		cout << "Dommage ! Le mot a deviner etait : " << motADeviner << endl;
+	}
+}
+
 
 // Le prochain tuto sera d'améliorer le code et d'ajouter de nouveaux contenue, on va commencer maintenant par ajouter la fonction
 // Le tuto n°4 on va crée un jeu de console en ajoutant une nouvelle fonction qui va s'appeller Games
