@@ -3,78 +3,77 @@
 
 using namespace std;
 
-// Fonction pour afficher la grille du jeu
-void afficherGrille(const vector<vector<char>>& grille) {
-    for (const auto& ligne : grille) {
-        for (char casee : ligne) {
-            cout << casee << " ";
-        }
-        cout << endl;
-    }
+// Fonction pour afficher le plateau de jeu
+void printBoard(const vector<char>& board) {
+    cout << " " << board[0] << " | " << board[1] << " | " << board[2] << endl;
+    cout << "---|---|---" << endl;
+    cout << " " << board[3] << " | " << board[4] << " | " << board[5] << endl;
+    cout << "---|---|---" << endl;
+    cout << " " << board[6] << " | " << board[7] << " | " << board[8] << endl;
 }
 
-// Fonction pour vérifier si un joueur a gagné
-bool verifierGagnant(const vector<vector<char>>& grille, char symbole) {
-    // Vérification des lignes et des colonnes
-    for (int i = 0; i < 3; ++i) {
-        if (grille[i][0] == symbole && grille[i][1] == symbole && grille[i][2] == symbole) {
-            return true; // Ligne i
-        }
-        if (grille[0][i] == symbole && grille[1][i] == symbole && grille[2][i] == symbole) {
-            return true; // Colonne i
-        }
-    }
-
-    // Vérification des diagonales
-    if (grille[0][0] == symbole && grille[1][1] == symbole && grille[2][2] == symbole) {
-        return true; // Diagonale principale
-    }
-    if (grille[0][2] == symbole && grille[1][1] == symbole && grille[2][0] == symbole) {
-        return true; // Diagonale secondaire
-    }
-
-    return false;
+// Fonction pour vérifier s'il y a un gagnant
+bool checkForWin(const vector<char>& board, char player) {
+    return ((board[0] == player && board[1] == player && board[2] == player) ||
+        (board[3] == player && board[4] == player && board[5] == player) ||
+        (board[6] == player && board[7] == player && board[8] == player) ||
+        (board[0] == player && board[3] == player && board[6] == player) ||
+        (board[1] == player && board[4] == player && board[7] == player) ||
+        (board[2] == player && board[5] == player && board[8] == player) ||
+        (board[0] == player && board[4] == player && board[8] == player) ||
+        (board[2] == player && board[4] == player && board[6] == player));
 }
 
-// Fonction principale du jeu
+// Fonction pour vérifier s'il y a égalité
+bool checkForTie(const vector<char>& board) {
+    for (char cell : board) {
+        if (cell != 'X' && cell != 'O') {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main() {
-    vector<vector<char>> grille(3, vector<char>(3, '.')); // Initialise la grille du jeu
+    vector<char> board = { '1', '2', '3', '4', '5', '6', '7', '8', '9' }; // Plateau de jeu initial
+    char currentPlayer = 'X'; // Joueur actuel
 
-    char joueur = 'X'; // Symbole du premier joueur
-    int casesRestantes = 9; // Nombre de cases restantes sur la grille
+    cout << "Bienvenue dans le jeu de Morpion (Tic-Tac-Toe) !" << endl;
+    cout << "Joueur X commence." << endl;
 
-    cout << "Bienvenue dans le jeu de Tic-Tac-Toe !" << endl;
+    while (true) {
+        printBoard(board);
 
-    while (casesRestantes > 0) {
-        afficherGrille(grille);
+        // Le joueur choisit une case
+        int choice;
+        cout << "Joueur " << currentPlayer << ", veuillez choisir une case (1-9) : ";
+        cin >> choice;
+        choice--; // Ajuste pour l'index du tableau
 
-        // Demande au joueur de choisir une case
-        int ligne, colonne;
-        cout << "Joueur " << joueur << ", entrez la ligne et la colonne (de 0 a 2) : ";
-        cin >> ligne >> colonne;
-
-        // Vérifie si la case est valide et disponible
-        if (ligne >= 0 && ligne < 3 && colonne >= 0 && colonne < 3 && grille[ligne][colonne] == '.') {
-            grille[ligne][colonne] = joueur;
-            casesRestantes--;
-
-            // Vérifie si le joueur a gagné
-            if (verifierGagnant(grille, joueur)) {
-                afficherGrille(grille);
-                cout << "Le joueur " << joueur << " a gagne !" << endl;
-                return 0; // Fin du jeu
-            }
-
-            // Passe au prochain joueur
-            joueur = (joueur == 'X') ? 'O' : 'X';
+        // Vérifie si la case est valide et non occupée
+        if (choice < 0 || choice >= 9 || board[choice] == 'X' || board[choice] == 'O') {
+            cout << "Case invalide ou déjà occupée. Veuillez choisir à nouveau." << endl;
+            continue;
         }
-        else {
-            cout << "Case invalide ou deja occupee. Veuillez reessayer." << endl;
+
+        // Place le symbole du joueur sur la case choisie
+        board[choice] = currentPlayer;
+
+        // Vérifie s'il y a un gagnant ou une égalité
+        if (checkForWin(board, currentPlayer)) {
+            printBoard(board);
+            cout << "Le joueur " << currentPlayer << " a gagné !" << endl;
+            break;
         }
+        else if (checkForTie(board)) {
+            printBoard(board);
+            cout << "Match nul !" << endl;
+            break;
+        }
+
+        // Change de joueur
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
     }
-
-    // Si aucune case n'est disponible et aucun joueur n'a gagné, c'est un match nul
-    cout << "Match nul !" << endl;
 
     return 0;
 }

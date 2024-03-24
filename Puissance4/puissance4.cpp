@@ -124,7 +124,7 @@ int main() {
             if (board.checkWinner(currentPlayerToken)) {
                 // Afficher le plateau de jeu final
                 board.display();
-                cout << "Félicitations! Le joueur " << (player1Turn ? "1 (X)" : "2 (O)") << " a gagné!\n";
+                cout << "Felicitations! Le joueur " << (player1Turn ? "1 (X)" : "2 (O)") << " a gagne!\n";
                 break;  // Sortir de la boucle de jeu
             }
             // Passer au tour du prochain joueur
@@ -135,7 +135,7 @@ int main() {
         }
     }
 
-    cout << "Merci d'avoir joué!\n";
+    cout << "Merci d'avoir joue!\n";
 
     return 0;
 }
