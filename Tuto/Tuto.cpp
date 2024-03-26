@@ -19,11 +19,14 @@ void VitessteCovert();
 void VitesseCalcul();
 void NonbreaDeviner();
 void Pendu();
+void TaxeCalculator();
 
 
 int main() {
 	double result = 0;
 	int choise;
+
+	
 
 	do
 	{
@@ -39,7 +42,8 @@ int main() {
 		std::cout << "10 Calcul de vitesse\n";
 		std::cout << "11. Nombre a deviner\n";
 		std::cout << "12. Jeu de pendu\n";
-		cout << "13. quitter\n";
+		cout << "13. Calcule de taxe\n";
+		cout << "14. quitter\n";
 
 		// user inputs
 		std::cin >> choise;
@@ -88,7 +92,9 @@ int main() {
 			break;
 		case 12: Pendu();
 			break;
-		case 13: std::cout << "Au revoir";
+		case 13: TaxeCalculator();
+			break;
+		case 14: std::cout << "Au revoir";
 			// Fais un temp de pose
 			Sleep(500);
 			break;
@@ -97,7 +103,7 @@ int main() {
 
 		}
 		//Si ce n'est pas egal a 8 on continu
-	} while (choise != 13);
+	} while (choise != 14);
 
 }
 
@@ -378,7 +384,7 @@ void VitesseCalcul()
 
 void NonbreaDeviner()
 {
-	srand(time(0));
+	
 
 	// Génération d'un nombre aléatoire entre 1 et 100
 	int nombreADeviner = rand() % 100 + 1;
@@ -417,7 +423,7 @@ void Pendu()
 	vector<string> mots = { "informatique", "programmation", "developpement", "algorithmes", "ordinateur" };
 
 	// Choix aléatoire d'un mot à deviner
-	srand(time(0));
+	
 	string motADeviner = mots[rand() % mots.size()];
 
 	// Création d'une chaîne de tirets pour chaque lettre du mot à deviner
@@ -462,6 +468,49 @@ void Pendu()
 		cout << "Dommage ! Le mot a deviner etait : " << motADeviner << endl;
 	}
 }
+
+void TaxeCalculator()
+{
+	int choise;
+	double TTC;
+	double HT;
+	double taxe;
+
+	do
+	{
+		cout << "1.Prix hors taxe\n";
+		cout << "2.Prix TTC\n";
+		cout << "3.Taxe\n";
+		cout << "4. Retour au menu\n";
+		cout << "Votre choix: ";
+		cin >> choise;
+
+		switch (choise)
+		{
+		case 1: cout << "Veuillez mettre un prix TCC: ";
+			cin >> TTC;
+			HT = TTC / (1 + 0.20);
+			cout << "Prix hors taxe: " << HT << '\n';
+			break;
+		case 2: cout << "Veuillez mettre un prix HT: ";
+			cin >> HT;
+			TTC = HT * 20 / 100 + HT;
+			cout << "Le prix TTC: " << TTC << '\n';
+			break;
+		case 3: cout << "Veuillez mettre un prix HT: ";
+			cin >> HT;
+			taxe = HT * 20 / 100;
+			cout << "Votre taxe: " << taxe << '\n';
+			break;
+		case 4: cout << "Au revoir\n";
+		default: cout << "Erreur\n";
+
+		}
+	}while (choise != 4);
+}
+	
+
+	
 
 
 // Le prochain tuto sera d'améliorer le code et d'ajouter de nouveaux contenue, on va commencer maintenant par ajouter la fonction
