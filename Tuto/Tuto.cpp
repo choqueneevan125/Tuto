@@ -1,10 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <windows.h>
-#include <string>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
+
 using namespace std;
 // Les signature = 8 fonction
 void ShowResult(double result);
