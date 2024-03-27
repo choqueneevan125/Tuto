@@ -17,8 +17,6 @@ void Calculator();
 void TemperatureConvert();
 void VitessteCovert();
 void VitesseCalcul();
-void NonbreaDeviner();
-void Pendu();
 void TaxeCalculator();
 
 
@@ -40,10 +38,8 @@ int main() {
 		std::cout << "8. Conversion de temperature\n";
 		std::cout << "9. Conversion de vitesse\n";
 		std::cout << "10 Calcul de vitesse\n";
-		std::cout << "11. Nombre a deviner\n";
-		std::cout << "12. Jeu de pendu\n";
-		cout << "13. Calcule de taxe\n";
-		cout << "14. quitter\n";
+		cout << "11. Calcule de taxe\n";
+		cout << "12. quitter\n";
 
 		// user inputs
 		std::cin >> choise;
@@ -88,13 +84,9 @@ int main() {
 			break;
 		case 10: VitesseCalcul();
 			break;
-		case 11: NonbreaDeviner();
+		case 11: TaxeCalculator();
 			break;
-		case 12: Pendu();
-			break;
-		case 13: TaxeCalculator();
-			break;
-		case 14: std::cout << "Au revoir";
+		case 12: std::cout << "Au revoir";
 			// Fais un temp de pose
 			Sleep(500);
 			break;
@@ -103,7 +95,7 @@ int main() {
 
 		}
 		//Si ce n'est pas egal a 8 on continu
-	} while (choise != 14);
+	} while (choise != 12);
 
 }
 
@@ -380,93 +372,6 @@ void VitesseCalcul()
 		}
 
 	} while (choise != 'e' && choise != 'E');
-}
-
-void NonbreaDeviner()
-{
-	
-
-	// Génération d'un nombre aléatoire entre 1 et 100
-	int nombreADeviner = rand() % 100 + 1;
-
-	int tentative;
-	int essais = 0;
-	bool trouve = false;
-
-	cout << "Bienvenue dans le jeu de devinette !\n";
-	cout << "Devinez le nombre entre 1 et 100.\n";
-
-	do {
-		cout << "Entrez votre proposition : ";
-		cin >> tentative;
-		essais++;
-
-		if (tentative < nombreADeviner) {
-			cout << "Le nombre mystere est plus grand !\n";
-		}
-		else if (tentative > nombreADeviner) {
-			cout << "Le nombre mystere est plus petit !\n";
-		}
-		else {
-			trouve = true;
-		}
-	} while (!trouve);
-
-	cout << "Bravo ! Vous avez devine le nombre mystere en " << essais << " essais.\n";
-
-	
-}
-
-void Pendu()
-{
-	// Liste de mots à deviner
-	vector<string> mots = { "informatique", "programmation", "developpement", "algorithmes", "ordinateur" };
-
-	// Choix aléatoire d'un mot à deviner
-	
-	string motADeviner = mots[rand() % mots.size()];
-
-	// Création d'une chaîne de tirets pour chaque lettre du mot à deviner
-	string motCache(motADeviner.size(), '_');
-
-	int essais = 0;
-	const int maxEssais = 6; // Maximum d'essais autorisés
-
-	cout << "Bienvenue dans le jeu du Pendu !\n";
-	cout << "Devinez le mot : " << motCache << endl;
-
-	// Boucle jusqu'à ce que le joueur ait deviné le mot ou jusqu'à épuisement des essais
-	while (essais < maxEssais && motCache != motADeviner) {
-		char lettre;
-		cout << "Entrez une lettre : ";
-		cin >> lettre;
-
-		// Vérifie si la lettre devinée est présente dans le mot à deviner
-		bool lettreTrouvee = false;
-		for (size_t i = 0; i < motADeviner.size(); ++i) {
-			if (motADeviner[i] == lettre) {
-				motCache[i] = lettre;
-				lettreTrouvee = true;
-			}
-		}
-
-		// Affiche le mot partiellement découvert
-		cout << "Mot : " << motCache << endl;
-
-		// Si la lettre n'est pas trouvée, incrémentez le compteur d'essais
-		if (!lettreTrouvee) {
-			essais++;
-			cout << "Incorrect ! Essais restants : " << maxEssais - essais << endl;
-		}
-	}
-
-	// Vérifie si le joueur a gagné ou perdu
-	if (motCache == motADeviner) {
-		cout << "Felicitations ! Vous avez devine le mot : " << motADeviner << endl;
-	}
-	else {
-		cout << "Dommage ! Le mot a deviner etait : " << motADeviner << endl;
-	}
 }
 
 void TaxeCalculator()
